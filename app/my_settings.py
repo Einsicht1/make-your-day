@@ -1,4 +1,5 @@
-SECRET_KEY = 'django-insecure-kp@gkt*nb53((t_f%j)hjfq_wnbg=b@e=4&bo0^jy-eopbv$^*'
+SECRET_KEY = 'django-insecure-kp@gkt*nb53((t_f%j)' \
+             'hjfq_wnbg=b@e=4&bo0^jy-eopbv$^*'
 
 DATABASES = {
     'default': {
@@ -14,4 +15,3 @@ DATABASES = {
                     }
     }
 }
-
