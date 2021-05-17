@@ -1,0 +1,59 @@
+version: "3"
+
+services:
+  app:  # make service called "app"
+    build:
+      context: .   # current dir
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=app
+      - DB_USER=postgres
+      - DB_PASS=unsafepassword
+    depends_on: # depends_on을 지정하므로 1) db가 app보다 먼저 실행됨. 2) 네트워크를 통해  db라는 서비스와 app이 연결.
+      - db
+
+  db:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=unsafepassword
+
+
+
+#version: "3"
+#
+#services:
+#  app:
+#    build:
+#      context: .
+#    ports:
+#      - "8000:8000"
+#    volumes:
+#      - ./app:/app
+#    command: >
+#      sh -c " python manage.py migrate &&
+#              python manage.py runserver 0.0.0.0:8000"
+#
+#    environment:
+#      - DB_HOST=/tmp/mysql.sock
+#      - DB_NAME=my_day
+#      - DB_USER=root
+#      - DB_PASS=1234
+#      - ALLOWED_HOST=127.0.0.1
+#      - DEBUG=1
+#    depends_on:
+#      - db
+#
+#  db:
+#    image: postgres:10-alpine
+#    environment:
+#      - POSTGRES_DB=app
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=supersecretpassword
